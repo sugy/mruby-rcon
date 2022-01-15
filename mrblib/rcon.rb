@@ -72,8 +72,9 @@ class Rcon
       Cgroup::CPU.new(@cgroup_name).delete
       Cgroup::BLKIO.new(@cgroup_name).delete
       Cgroup::MEMORY.new(@cgroup_name).delete
-      ret
+      return ret
     end
+    true
   end
 
   def setup_cgroup_cpu config
