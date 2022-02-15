@@ -74,6 +74,7 @@ class Rcon
       Cgroup::MEMORY.new(@cgroup_name).delete
       return ret
     end
+    true
   end
 
   def setup_cgroup_cpu config
