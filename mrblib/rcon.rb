@@ -68,11 +68,13 @@ class Rcon
   def run
     setup_cgroup @class_config[:resource]
     if @class_config[:pids].nil?
-      exec_cmd @user, @class_config[:command]
+      ret = exec_cmd @user, @class_config[:command]
       Cgroup::CPU.new(@cgroup_name).delete
       Cgroup::BLKIO.new(@cgroup_name).delete
       Cgroup::MEMORY.new(@cgroup_name).delete
+      return ret
     end
+    true
   end
 
   def setup_cgroup_cpu config
@@ -83,6 +85,7 @@ class Rcon
       c.attach
     else
       @class_config[:pids].each do |pid|
+        puts pid.to_s
         c.attach pid
       end
     end
